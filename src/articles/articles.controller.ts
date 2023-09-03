@@ -18,14 +18,16 @@ export class ArticlesController {
 
   @Get('drafts')
   @ApiOkResponse({ type: ArticleEntity, isArray: true })
-  findDrafts() {
-    return this.articlesService.findDrafts()
+  async findDrafts() {
+    const drafts = await this.articlesService.findDrafts();
+    return drafts.map((draft) => new ArticleEntity(draft));
   }
 
   @Get()
   @ApiOkResponse({ type: ArticleEntity, isArray: true })
-  findAll() {
-    return this.articlesService.findAll();
+  async findAll() {
+    const articles = await this.articlesService.findAll();
+    return articles.map((article) => new ArticleEntity(article));
   }
 
   @Get(':id')
@@ -35,7 +37,7 @@ export class ArticlesController {
     if (!article) {
       throw new NotFoundException(`Article with id: ${id} is not found`)
     }
-    return article;
+    return new ArticleEntity(article);
   }
 
   @Patch(':id')
