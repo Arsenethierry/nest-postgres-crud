@@ -8,13 +8,13 @@ import { UserEntity } from './entities/user.entity';
 @Controller('users')
 @ApiTags('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
-  // @Post()
-  // @ApiCreatedResponse({ type: UserEntity })
-  // async create(@Body() createUserDto: CreateUserDto) {
-  //   return new UserEntity(await this.usersService.create(createUserDto));
-  // }
+  @Post()
+  @ApiCreatedResponse({ type: UserEntity })
+  async create(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
+  }
 
   @Get()
   @ApiOkResponse({ type: UserEntity, isArray: true })
